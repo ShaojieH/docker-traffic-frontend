@@ -47,12 +47,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: 'Dashboard', icon: 'dashboard' }
+      }
+    ]
   },
 
   {
@@ -89,6 +91,26 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/container',
+    name: 'Container',
+    component: Layout,
+    meta: { title: '容器管理', icon: 'dashboard' },
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/container/list/index'),
+        meta: { title: '容器列表', icon: 'table' }
+      },
+      {
+        path: 'graph',
+        name: 'Graph',
+        component: () => import('@/views/container/graph/index'),
+        meta: { title: '容器关系图', icon: 'tree' }
+      }
+    ]
+  },
 
   {
     path: '/nested',
@@ -120,13 +142,15 @@ export const constantRoutes = [
             children: [
               {
                 path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
                 meta: { title: 'Menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
                 meta: { title: 'Menu1-2-2' }
               }
@@ -163,11 +187,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
