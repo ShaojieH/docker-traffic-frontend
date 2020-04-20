@@ -47,6 +47,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    hidden: true,
     children: [
       {
         path: 'dashboard',
@@ -59,6 +60,7 @@ export const constantRoutes = [
 
   {
     path: '/example',
+    hidden: true,
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
@@ -81,6 +83,7 @@ export const constantRoutes = [
 
   {
     path: '/form',
+    hidden: true,
     component: Layout,
     children: [
       {
@@ -92,10 +95,25 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/traffic',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Traffic',
+        component: () => import('@/views/traffic/index'),
+        meta: {
+          title: '容器流量',
+          icon: 'dashboard'
+        }
+      }
+    ]
+  },
+  {
     path: '/container',
     name: 'Container',
     component: Layout,
-    meta: { title: '容器管理', icon: 'dashboard' },
+    meta: { title: '容器管理', icon: 'form' },
     children: [
       {
         path: 'list',
@@ -121,7 +139,7 @@ export const constantRoutes = [
         path: 'list',
         name: 'ConfigList',
         component: () => import('@/views/config/list'),
-        meta: { title: '配置列表', icon: 'table' }
+        meta: { title: '配置管理', icon: 'table' }
       },
       {
         path: 'edit/:filename',
@@ -135,6 +153,7 @@ export const constantRoutes = [
   },
   {
     path: '/nested',
+    hidden: true,
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
@@ -195,6 +214,7 @@ export const constantRoutes = [
 
   {
     path: 'external-link',
+    hidden: true,
     component: Layout,
     children: [
       {
