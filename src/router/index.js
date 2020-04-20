@@ -99,19 +99,40 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: 'List',
+        name: 'ContainerList',
         component: () => import('@/views/container/list/index'),
         meta: { title: '容器列表', icon: 'table' }
       },
       {
         path: 'graph',
-        name: 'Graph',
+        name: 'ContainerGraph',
         component: () => import('@/views/container/graph/index'),
         meta: { title: '容器关系图', icon: 'tree' }
       }
     ]
   },
-
+  {
+    path: '/config',
+    name: 'Config',
+    component: Layout,
+    meta: { title: '配置管理', icon: 'dashboard' },
+    children: [
+      {
+        path: 'list',
+        name: 'ConfigList',
+        component: () => import('@/views/config/list'),
+        meta: { title: '配置列表', icon: 'table' }
+      },
+      {
+        path: 'edit/:filename',
+        name: 'ConfigEdit',
+        component: () => import('@/views/config/edit'),
+        meta: { title: '编辑配置', icon: 'nested' },
+        hidden: true,
+        props: true
+      }
+    ]
+  },
   {
     path: '/nested',
     component: Layout,
