@@ -120,13 +120,15 @@ export const constantRoutes = [
         name: 'ContainerList',
         component: () => import('@/views/container/list/index'),
         meta: { title: '容器列表', icon: 'table' }
-      },
+      }
+      /*
       {
         path: 'graph',
         name: 'ContainerGraph',
         component: () => import('@/views/container/graph/index'),
         meta: { title: '容器关系图', icon: 'tree' }
       }
+      */
     ]
   },
   {

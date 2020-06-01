@@ -6,17 +6,29 @@
           <el-input v-model.number="config.worker" type="number" />
         </el-col>
       </el-form-item>
+
+      <el-form-item label="分组">
+        <el-checkbox-group
+          v-for="(group, index_group) in config.groups"
+          :key="index_group"
+          :value="group.children"
+        >
+          <el-row>
+            <el-col :span="2" class="line">{{ group.name }}</el-col>
+
+            <el-checkbox v-for="(container, index) in containers" :key="index" :label="container" />
+            <el-row />
+          </el-row>
+        </el-checkbox-group>
+      </el-form-item>
       <el-form-item label="流量速率规则">
         <el-row v-for="(limit, index) in config.speed_limit" :key="index">
           <el-form-item>
             <el-col :span="2" class="line">起始容器</el-col>
             <el-col :span="4">
-              <el-select
-                v-model="config.speed_limit[index].from_container"
-                placeholder="选择容器"
-              >
+              <el-select v-model="config.speed_limit[index].from_container" placeholder="选择容器">
                 <el-option
-                  v-for="(container, index_container) in containers"
+                  v-for="(container, index_container) in containers_and_groups"
                   :key="index_container"
                   :label="container"
                   :value="container"
@@ -25,12 +37,9 @@
             </el-col>
             <el-col :span="2" class="line">目的地容器</el-col>
             <el-col :span="4">
-              <el-select
-                v-model="config.speed_limit[index].to_container"
-                placeholder="选择容器"
-              >
+              <el-select v-model="config.speed_limit[index].to_container" placeholder="选择容器">
                 <el-option
-                  v-for="(container, index_container) in containers"
+                  v-for="(container, index_container) in containers_and_groups"
                   :key="index_container"
                   :label="container"
                   :value="container"
@@ -39,10 +48,7 @@
             </el-col>
             <el-col :span="2" class="line">速率限制</el-col>
             <el-col :span="3">
-              <el-input
-                v-model.number="config.speed_limit[index].limit"
-                type="number"
-              />
+              <el-input v-model.number="config.speed_limit[index].limit" type="number" />
             </el-col>
             <el-button type="danger" @click="remove(index)">删除</el-button>
           </el-form-item>
@@ -60,7 +66,7 @@
 </template>
 
 <script>
-import { getConfig } from '@/api/config'
+import { getConfig, applyConfig } from '@/api/config'
 import { safeLoad } from 'js-yaml'
 export default {
   props: {
@@ -82,6 +88,9 @@ export default {
         list.push('worker_' + x)
       }
       return list
+    },
+    containers_and_groups() {
+      return this.containers.concat(this.config.groups.map(group => group.name))
     }
   },
   created() {
@@ -104,7 +113,9 @@ export default {
     add() {
       this.config.speed_limit.push({})
     },
-    apply() {}
+    apply() {
+      applyConfig(this.filename)
+    }
   }
 }
 </script>
@@ -112,5 +123,6 @@ export default {
 <style scoped>
 .line {
   text-align: center;
+  font-size: 14px;
 }
 </style>

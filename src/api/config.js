@@ -13,3 +13,15 @@ export function getConfig(filename) {
     method: 'get'
   })
 }
+
+export function applyConfig(filename) {
+  return request({
+    url: `/config/apply/${filename}`,
+    method: 'post'
+  })
+
+  // return request({
+  //   url: `/config/apply/${filename}`,
+  //   method: 'post'
+  // })
+}
