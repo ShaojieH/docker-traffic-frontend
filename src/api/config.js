@@ -19,9 +19,14 @@ export function applyConfig(filename) {
     url: `/config/apply/${filename}`,
     method: 'post'
   })
+}
 
-  // return request({
-  //   url: `/config/apply/${filename}`,
-  //   method: 'post'
-  // })
+export function saveConfig(filename, config) {
+  return request({
+    url: `/config/save/${filename}`,
+    method: 'post',
+    params: {
+      config
+    }
+  })
 }
